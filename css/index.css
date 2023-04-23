@@ -1,0 +1,97 @@
+button {
+    border-top-left-radius: 0%;
+    border-bottom-left-radius: 0%;
+    border-bottom-right-radius: 0%;
+    border-top-right-radius: 26%;
+    margin-right: 4px;
+}
+button:hover {
+    cursor: pointer;
+    background-color: #777;
+}
+button.tabtrue- {
+    background-color: #555;
+    color: lightblue;
+}
+td {
+    border: 1px solid black;
+}
+thead {
+    background-color: #EEE;
+}
+.code {
+    font-family: Courier;
+    color: #888;
+    letter-spacing: -2px;
+}
+table.cfg td {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding: 4px;
+}
+table.cfg {
+    margin-left: 2px;
+    width: 203px;
+}
+table {
+    border-collapse: collapse;
+}
+#run {
+    padding-left:33px;
+    padding-right:33px;
+
+    color:#090;
+    background-color:#444;
+    font-weight: bold;
+    font-size: 30px;
+}
+td em {
+    font-size: 10px;
+}
+.win {
+    color: #00adef;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.unx {
+    color: #1d6434;
+    font-weight: bold;
+    text-decoration: underline;
+}
+#vis {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+#vis td {
+    display: inline-block;
+    width:16px;
+    height:20px;
+}
+input {
+    width: 60px;
+}
+/*        .unicode {
+    background-color: red;
+}
+.ascii {
+    background-color: lightblue;
+}*/
+.cs {
+    height:188px;
+    display: block;
+    overflow: scroll;
+}
+.cs td {
+    display: inline-block;
+    width: 16px;
+    height: 20px;
+}
+
+td.typetrue-, td.actiontrue- {
+    background-color: lightgreen;
+}
+
+td.typetrue-:hover,td.typefalse-:hover, table.cs tbody tr td,
+table.cfg tbody tr td, #run {
+    cursor: pointer;
+}

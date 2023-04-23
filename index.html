@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head><title>vischar</title>
+    <!--<meta charset="ISO-8859-1">-->
+    <script src="js/vis.js"></script>
+    <script src="js/transform.js"></script>
+    <script src="demotext1.js" charset="UTF-8"></script>
+    <script src="demotext2.js" charset="UTF-8"></script>
+    <script src="js/charset-build.js"></script>
+    <script src="js/tab-data.js"></script>
+    <script src="index.js"></script>
+    <script src="js/css-toggle.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <body>
+        <table>
+            <tbody>
+                <tr>
+                    <td colspan="5" style="width:840px;padding:4px;background-color:#EEE">
+                        <span id="tabs">
+                            <button
+                                id="tab0"
+                                class="tabtrue-"
+                                onclick="cssToggle(this);tbRender('tab')"
+                            >Unicode Delete Demo</button>
+                            <button
+                                id="tab1"
+                                class="tabfalse-"
+                                onclick="cssToggle(this);tbRender('tab')"
+                            >Sql Enquote Enlist Demo</button>
+                            <button
+                                id="tab2"
+                                class="tabfalse-"
+                                onclick="cssToggle(this);tbRender('tab')"
+                            >Quote Demo</button>
+                        </span>
+                        <span id="newtab"><button onclick="newTab()">+</button></span>
+                        <span><button onclick="copyToClipboard()">Copy to Clipboard</button></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table cellspacing="0" class="cfg">
+                            <thead><tr><td>Transform Type</td></tr></thead>
+                            <tbody>
+                                <tr><td id="ascii_quo" class="typefalse-" onclick="cssToggle(this);tbRender([8220, 8221],'each',[34],'replace')">&ldquo; &rdquo; <a class="code">-&gt;</a> &quot;</td></tr>
+                                <tr><td id="unc_quo" class="typefalse-" onclick="cssToggle(this);tbRender([34],'each',[8220,8221],'alternating_char_replace')">&quot; <a class="code">-&gt;</a> &ldquo; &rdquo;</td></tr>
+                                <tr><td id="win-enq-enl" class="typefalse-" onclick="cssToggle(this);tbRender([13,10],'sequence',[39,44,13,10,39],'replace')">\r\n <a class="code">-&gt;</a> ',\r\n' <em>(for <a class="win">Win</a>-nl, enquote enlist)</em></td></tr>
+                                <tr><td id="win-unq-del" class="typefalse-" onclick="cssToggle(this);tbRender([39,44,13,10,39],'sequence',[13,10],'replace')">',\r\n' <a class="code">-&gt;</a> \r\n <em>(unquoted delisted <a class="win">Win</a>-nl)</em></td></tr>
+                                <tr><td id="unx-enq-enl" class="typefalse-" onclick="cssToggle(this);tbRender([10],'sequence',[39,44,10,39],'replace')">\n <a class="code">-&gt;</a> ',\n' <em>(for <a class="unx">Unx</a>-nl, enquote enlist)</em></td></tr>
+                                <tr><td id="unx-unq-del" class="typefalse-" onclick="cssToggle(this);tbRender([39,44,10,39],'sequence',[10],'replace')">',\n' <a class="code">-&gt;</a> \n <em>(unquoted delisted <a class="unx">Unx</a>-nl)</em></td></tr>
+                                <tr><td id="unc-empty" class="typetrue-" onclick="cssToggle(this);tbRender((function(){let a=[]; for (var i=256; i<8986; i++){a.push(i);} return a;})(),'each',[],'replace')"><em>unicode</em> <a class="code">-&gt;</a> &empty;</td></tr>
+                                <tr><td id="custom" class="typefalse-" onclick="cssToggle(this)"><em>custom</em></td></tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table cellspacing="0" class="cfg">
+                            <thead><tr><td>Transform LHS (select)</td></tr></thead>
+                            <tbody>
+                                <tr><td id="cs-any">&nbsp;</td></tr>
+                                <tr><td style="height:102px;" id="charset">&nbsp;</td></tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table cellspacing="0" class="cfg">
+                            <thead><tr><td>Transform RHS (replace)</td></tr></thead>
+                            <tbody>
+                                <tr><td id="acs-seq">&nbsp;&lt;--sequential--&gt;</td></tr>
+                                <tr><td style="height:102px;" id="allcharset">&nbsp;</td></tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <table cellspacing="0" class="cfg">
+                            <thead><tr><td>Transform Action</td></tr></thead>
+                            <tbody>
+                                <tr><td id="replace" class="actiontrue-" onclick="tbAction('replace')">Replace</td></tr>
+                                <tr><td id="alternating_char_replace" class="actionfalse-" onclick="tbAction('alternating_char_replace')">Alternating Char. Replace</td></tr>
+                                <tr><td id="insert_before" class="actionfalse-" onclick="tbAction('insert_before')">Insert Before</td></tr>
+                                <tr><td id="insert_after" class="actionfalse-" onclick="tbAction('insert_after')" style="height:48px">Insert After</td></tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <div>Start At Index: <input id="start" onchange="tbDex()" type="number" value="0"></input></div>
+                        <div>End At Index:&nbsp; <input id="end" onchange="tbDex()" type="number" value="1818"></input></div>
+                        <div onclick="tfRun()" id="run"><br>R<br>U<br>N<br><br></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="background-color: #EEE">&nbsp;
+                     <!--<div id="helptext" style="font-weight:bold">Demo 1: Click &ldquo; &rdquo; <a class="code">-&gt;</a> &quot; transform. Then click Run. Then click Demo 1 tab to get the raw text.</div>-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

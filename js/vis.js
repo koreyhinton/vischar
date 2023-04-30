@@ -14,8 +14,8 @@ window.vsUpdate = function() {
         let el = document.getElementById("ch"+i);
         let isSelected = (window.gSelN.has(n) && seqOverrideVal);
         let isInRange = (i>=s && i<=e);
-        el.style.backgroundColor = (isSelected && isInRange) ? 'lightgreen' : 'lightblue';
-        if (!isSelected && n>225) el.style.backgroundColor = 'red';
+        el.style.backgroundColor = color(n,isSelected && isInRange); //? 'lightgreen' : 'lightblue';
+        //if (!isSelected && n>225) el.style.backgroundColor = 'red';
     }; // end style function
 
     function nString(str, i, length) {

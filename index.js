@@ -88,7 +88,8 @@ function toggleSelSpec() {
 
 function color(n, greenCond=false) {
     if (greenCond) return "#03F934";
-    return (n>225) ? "red" : "lightblue";
+    if (n<32||n==127) return "rgba(173,216,230,0.1)"; // control char
+    return (n>127) ? "rgba(255,200,200,0.2)" : "rgba(173,216,230,0.6)"/*"lightblue"*/; // non-ascii
 }
 
 function select(elOrId) {
@@ -138,11 +139,14 @@ function select(elOrId) {
     }
 }
 
-function buildChar(n,cs) {
+function buildChar(n,cs,i=-1,colspan='') {
     let enc = "&#"+n+";";
     if (n==13) enc = "&bsol;r";
     if (n==10) enc = "&bsol;n";
-    return "<td onclick='select(this)' id='"+(cs+n)+"' style='background-color: "+color(n)+"'>" + enc +"</td>";
+    let select = cs=="ch" ? "" : " onclick='select(this)' ";
+    let clss = cs=="ch" ? " class='vis"+n+"' " : "";
+    let id = cs=="ch" ? `id='${cs}${i}'` : `id='${(cs+n)}'`; 
+    return `<td${select} ${id} ${clss} title='${n}' style='background-color: ${color(n)}'${colspan}>${enc}</td>`;
 }
 
 window.addEventListener('DOMContentLoaded', (e) => {

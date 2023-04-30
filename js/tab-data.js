@@ -29,8 +29,8 @@ window.tbClearControls = function() {
     let setR = window.gRepN;
     let setS = window.gSelN;
     for (var i=0; i<8986; i++) {
-        if (setS.has(i)) { if (document.getElementById("cs"+i)!=null)document.getElementById("cs"+i).style.backgroundColor = "lightblue"; } // select("cs"+i);  }
-        if (setR.has(i)) { document.getElementById("acs"+i).style.backgroundColor = "lightblue"; } // select("acs"+i); }
+        if (setS.has(i)) { if (document.getElementById("cs"+i)!=null)document.getElementById("cs"+i).style.backgroundColor = color(i, false);/*"lightblue";*/ } // select("cs"+i);  }
+        if (setR.has(i)) { document.getElementById("acs"+i).style.backgroundColor = color(i, false); /*"lightblue";*/ } // select("acs"+i); }
     } // end for i
     setR.orderArr = [];setR.set = new Set();document.getElementById("acs-seq").innerHTML = window.gRepN.order() + ' (sequence)';//todo: change from set to different structure
     setS.orderArr = [];setS.set = new Set();document.getElementById("cs-any").innerHTML = setS.order() + ' (<button onclick="this.innerHTML=toggleSelSpec()">'+window./*gSelSpec*/gTbData[tabIdx].selStrat+'</button>)';//todo: change from set to different structure
@@ -150,14 +150,14 @@ window.tbRender = function(sel, selStrat, rpl, action) {
 
         if (i > 0 && (n==10||n==13)) {
             if (n==13) { // \r
-                html += "<td id='ch"+i+"' class='vis"+n+"' style='background-color:lightblue;'>&bsol;r</td>";
+                html += buildChar(n,'ch',i);//"<td id='ch"+i+"' class='vis"+n+"' style='background-color:lightblue;'>&bsol;r</td>";
                 curtdcount += 1;
                 i += 1;
             }
             curtdcount += 1;
             var remtd = "";
             var rem = tdcount - curtdcount;
-            html += "<td id='ch"+i+"' class='vis"+n+"' style='background-color:lightblue;' colspan='"+1+rem+"'>&bsol;n</td>";
+            html += buildChar(n,'ch',i,` colspan="${(tdcount - curtdcount)}"`); //"<td id='ch"+i+"' class='vis"+n+"' style='background-color:lightblue;' colspan='"+1+rem+"'>&bsol;n</td>";
 
             //if (rem > 0) remtd = maketd(rem);
             
@@ -167,11 +167,11 @@ window.tbRender = function(sel, selStrat, rpl, action) {
         }
         curtdcount += 1;
         enc = "&#"+n+";"
-        if (n > 225) {
+        html+=buildChar(n, 'ch', i, i==text.length-1?` colspan="${(tdcount - curtdcount)}"`:'');/*if (n > 225) {
             html += "<td id='ch"+i+"' class='vis"+n+"' style='background-color:red;'>"+enc+"</td>";
         } else {
             html += "<td id='ch"+i+"' class='vis"+n+"' style='background-color:lightblue;'>"+enc+"</td>";
-        }
+        }*/
     }
     html += "</tr></tbody></table>";
     var div = document.createElement("div");

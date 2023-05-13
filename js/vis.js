@@ -1,5 +1,5 @@
 window.vsUpdate = function() {
-    console.log('vsUpdate', console.trace());
+
     let tabIdx = parseInt(document.
                             getElementsByClassName("tabtrue-")[0]
                             .getAttribute("id")
@@ -32,12 +32,12 @@ window.vsUpdate = function() {
         let n = t.charCodeAt(i);
         if (strat == 'each') style(i, n);
         else { // sequence
-            if (window.gSelN.orderArr[window.gSelN.orderArr.length-1] == n) {
-                console.log(n, window.gSelN.orderArr[window.gSelN.orderArr.length-1]);
-                console.log(window.gSelN.orderArr.join(" ") == nString(t, i-window.gSelN.orderArr.length+1, window.gSelN.orderArr.length), window.gSelN.orderArr.join(" "), '==', nString(t, i-window.gSelN.orderArr.length+1, window.gSelN.orderArr.length));
-                let idx1 = i-window.gSelN.orderArr.length+1;
-                if (idx1 >=0 && window.gSelN.orderArr.join(" ") == nString(t, idx1, window.gSelN.orderArr.length)) {
-                    for (var j=i-window.gSelN.orderArr.length; j<=i; j++) {
+            if (/*window.gSelN.orderArr[window.gSelN.orderArr.length-1]*/window.gSelN.last() == n) {
+                //console.log(n, window.gSelN.orderArr[window.gSelN.orderArr.length-1]);
+                //console.log(window.gSelN.orderArr.join(" ") == nString(t, i-window.gSelN.orderArr.length+1, window.gSelN.orderArr.length), window.gSelN.orderArr.join(" "), '==', nString(t, i-window.gSelN.orderArr.length+1, window.gSelN.orderArr.length));
+                let idx1 = i-/*window.gSelN.orderArr.length*/window.gSelN.count()+1;
+                if (idx1 >=0 && /*window.gSelN.orderArr.join(" ")*/window.gSelN.join(" ") == nString(t, idx1, window.gSelN.count()/*window.gSelN.orderArr.length*/)) {
+                    for (var j=i-/*window.gSelN.orderArr.length*/window.gSelN.count(); j<=i; j++) {
                         style(j, t.charCodeAt(j), true);
                     } // end for j
                 } // end if order arr

@@ -32,8 +32,8 @@ window.tbClearControls = function() {
         if (setS.has(i)) { if (document.getElementById("cs"+i)!=null)document.getElementById("cs"+i).style.backgroundColor = color(i, false);/*"lightblue";*/ } // select("cs"+i);  }
         if (setR.has(i)) { document.getElementById("acs"+i).style.backgroundColor = color(i, false); /*"lightblue";*/ } // select("acs"+i); }
     } // end for i
-    setR.orderArr = [];setR.set = new Set();document.getElementById("acs-seq").innerHTML = window.gRepN.order() + ' (sequence)';//todo: change from set to different structure
-    setS.orderArr = [];setS.set = new Set();document.getElementById("cs-any").innerHTML = setS.order() + ' (<button onclick="this.innerHTML=toggleSelSpec()">'+window./*gSelSpec*/gTbData[tabIdx].selStrat+'</button>)';//todo: change from set to different structure
+    setR.empty();//setR.orderArr = [];setR.set = new Set();document.getElementById("acs-seq").innerHTML = window.gRepN.order() + ' (sequence)';//todo: change from set to different structure
+    setS.empty();//setS.orderArr = [];setS.set = new Set();document.getElementById("cs-any").innerHTML = setS.order() + ' (<button onclick="this.innerHTML=toggleSelSpec()">'+window./*gSelSpec*/gTbData[tabIdx].selStrat+'</button>)';//todo: change from set to different structure
 };
 
 window.tbRenderControls = function(tabIdx) {
@@ -61,7 +61,7 @@ window.tbRenderControls = function(tabIdx) {
         let n = rplNums[i];
         select("acs"+n)/*
         if (!window.gRepN.has(n))        select("acs"+n);
-        else { window.gRepN._add(n); document.getElementById("acs-seq").innerHTML = window.gRepN.order() + ' (sequence)'; }*/
+        else { window.gRepN.add(n); document.getElementById("acs-seq").innerHTML = window.gRepN.order() + ' (sequence)'; }*/
     } // end for rplNums
 
     let selStrat = window.gTbData[tabIdx].selStrat;
@@ -113,6 +113,15 @@ window.tbRenderControls = function(tabIdx) {
 
 }; // end tab render controls func
 
+window.tbUpdateSeq = function() {
+    let tabIdx = parseInt(document.
+                            getElementsByClassName("tabtrue-")[0]
+                            .getAttribute("id")
+                            .replace("tab",""));
+    window.gTbData[tabIdx].selNums = window.gSelN.all();
+    window.gTbData[tabIdx].rplNums = window.gRepN.all();
+};
+
 window.tbRender = function(sel, selStrat, rpl, action) {
     window.tbClearControls();
     document.getElementById("vis")?.parentElement.remove();
@@ -124,6 +133,7 @@ window.tbRender = function(sel, selStrat, rpl, action) {
                             getElementsByClassName("tabtrue-")[0]
                             .getAttribute("id")
                             .replace("tab",""));
+    document.getElementById('selStratBtn').innerHTML=window.gTbData[tabIdx].selStrat;
     if (sel != null) {
         if (sel != 'tab') {
             window.gTbData[tabIdx].selNums = sel;

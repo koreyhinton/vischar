@@ -12,17 +12,17 @@ window.tfRun = function() {
     let rpl = window.gTbData[tabIdx].rplNums;
 
     function test(i) {
-        if (i+window.gSelN.orderArr.length > t.length) return false;
-        let testA = window.gSelN.orderArr.join(" ");
+        if (i+/*window.gSelN.orderArr.length*/window.gSelN.count() > t.length) return false;
+        let testA = /*window.gSelN.orderArr.*/window.gSelN.join(" ");
         let testB = "";
-        for (var j=i; j<i+window.gSelN.orderArr.length; j++) {
+        for (var j=i; j<i+/*window.gSelN.orderArr.length*/window.gSelN.count(); j++) {
             if (j>i) testB += " ";
             testB += t.charCodeAt(j);
         } // end for j
         return testA === testB;
     } // end test func
 
-    let rplStr = [...window.gRepN.orderArr].map((n) => { return String.fromCharCode(n)}).join("");
+    let rplStr = [.../*window.gRepN.orderArr*/window.gRepN.all()].map((n) => { return String.fromCharCode(n)}).join("");
     let tfStr = "";
     let altCnt = 0;
 
@@ -39,10 +39,10 @@ window.tfRun = function() {
             tfStr += (String.fromCharCode(n)+rplStr);
         } else if (strat.charAt(0) == 's' && a == 'replace' && test(i)) {
             tfStr += rplStr;
-            i+=window.gSelN.orderArr.length-1;
+            i+=window.gSelN./*orderArr.length*/count()-1;
         } else if (strat.charAt(0) == 's' && a.charAt(0) == 'a' && test(i)) {
             tfStr += rplStr.charAt(altCnt % rplStr.length); altCnt += 1;
-            i+=window.gSelN.orderArr.length-1;
+            i+=window.gSelN./*orderArr.length*/count()-1;
         } else if (strat.charAt(0) == 's' && a == 'insert_before' && test(i)) {
             tfStr += (rplStr + String.fromCharCode(n));
         } else if (strat.charAt(0) == 's' && a == 'insert_after' && test(i)) {

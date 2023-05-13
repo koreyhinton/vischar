@@ -1,48 +1,11 @@
-// todo: change name from OMSET,
-// the behavior had to change to store more than 1 of a particular char.
-window.OMSet = class {//Order Matters
-    constructor() {
-        this.set = new Set();
-        this.orderArr = [];
-    }
-    has(el) { 
-        return this.set.has(el);
-    }
-    add(el) {
-        if (this.has(el)) return;
-        this.orderArr.push(el);
-        this.set.add(el);
-    }
-    _add(el) {
-        //todo: set doesn't make sense for sequences, change data structure
-        this.orderArr.push(el);
-        if (!this.has(el)) this.set.add(el);
-    }
-    delete(el) {
-        if (!this.has(el)) return;
-        this.orderArr.splice(this.orderArr.indexOf(el), 1);
-        this.set.delete(el);
-    }
-    order() {
-        var html = "";
-        for (var i=0; i<this.orderArr.length; i++) {
-            var n = this.orderArr[i];
-            if (i>0)html+="&nbsp;";
-            let enc = "&#" + n + ";";
-            if (n==13) enc = "\\r";
-            if (n==10) enc = "\\n";
-            html += enc;
-        }
-        return html;
-    }
-}
 window.gTab = 1;
 window.gDemoText = {
     "1": ()=>{return window.gDemoText1;},
     "2": ()=>{return window.gDemoText2;},
 };
-window.gSelN = new OMSet();
-window.gRepN = new OMSet();
+
+window.gSelN = null;//new OMSet();
+window.gRepN = null;//new OMSet();
 window.gSelSpec = "each";
 function getwidth(s) {
     let max = 0;
@@ -114,10 +77,10 @@ function select(elOrId) {
     //console.log(n);
     /*let selected = set.has(n);
     if (selected) set.delete(n);
-    else */set._add(n);//console.log(cs+n+"");
+    else */set.add(n);//console.log(cs+n+"");
     document.getElementById(cs+n+"").style.backgroundColor = color(n, true/*!selected*/);
     if (cs == 'acs') {
-        document.getElementById("acs-seq").innerHTML = set.order() + ' (sequence)';
+        //old: document.getElementById("acs-seq").innerHTML = set.order() + ' (sequence)';
         if (typeof elOrId !== 'string') {
             window.gTbData[tabIdx].rplNums.push(n);
         } // end acs type check
@@ -127,7 +90,7 @@ function select(elOrId) {
         window.gTbData[tabIdx].selNums.push(n);
     } // end cs type check
 
-    document.getElementById("cs-any").innerHTML = set.order() + ' (<button onclick="(function(){this.innerHTML=toggleSelSpec();tbRender(\'tab\')})()">'+window./*gSelSpec*/gTbData[tabIdx].selStrat+'</button>)';
+    //old: document.getElementById("cs-any").innerHTML = set.order() + ;
     // var els = document.getElementsByClassName("vis"+n);
     // for (var i=0; i<els.length; i++) {
     //     els[i].style.backgroundColor = color(n, true/*!selected*/);
@@ -150,6 +113,7 @@ function buildChar(n,cs,i=-1,colspan='') {
 }
 
 window.addEventListener('DOMContentLoaded', (e) => {
+
     window.chBuildAll(); //buildAllCharSet();
     window.gTbData.push({
         name: "Unicode Delete Demo",
@@ -186,8 +150,30 @@ window.addEventListener('DOMContentLoaded', (e) => {
         start: 0,
         end: 138
     });
+
+    let selDivCont = document.getElementById('cs-any');
+    let selEl = document.createElement('div');
+    selDivCont.appendChild(selEl);
+    let trailer = document.createElement('div');
+    trailer.innerHTML += ' (<button id="selStratBtn" onclick="(function(){this.innerHTML=toggleSelSpec();tbRender(\'tab\')})()">each</button>)';
+    selDivCont.appendChild(trailer);
+    let sel = new window.cqSeq();
+    let selDiv = new window.cqDiv(selEl);
+    window.gSelN = new window.cqWrap(sel, selDiv);
+
+    let rplDivCont = document.getElementById('acs-seq');
+    let rplEl = document.createElement('div');
+    rplDivCont.appendChild(rplEl);
+    let trailer2 = document.createElement('div');
+    trailer2.innerHTML += ' (sequence)';
+    rplDivCont.appendChild(trailer2);
+    let rpl = new window.cqSeq();
+    let rplDiv = new window.cqDiv(rplEl);
+    window.gRepN = new window.cqWrap(rpl, rplDiv);
+
     // console.log(window.gDemoText[window.gTab]());
     window.tbRender(window.gTbData[0].selNums, window.gTbData[0].selStrat, window.gTbData[0].rplNums, window.gTbData[0].action);
+
 
 
 });

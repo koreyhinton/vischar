@@ -2,7 +2,7 @@
 
 // A cqSeq instance represents a sequence of characters whose implementation is
 // independent from the UI counterpart (cqDiv).
-window.cqSeq = class {
+cqSeq = class {
     constructor() {
         this.set = new Set();
         this.orderArr = [];
@@ -46,13 +46,16 @@ window.cqSeq = class {
             this.set.delete(spliced[0]);
         } // end if spliced not found
     } // end delete at position func
+    count() { return this.orderArr.length; }
+    join(str) { return this.orderArr.join(str); }
+    all() { return this.orderArr; }
 }; // end seq
 
 // A cqDiv instance is a character sequence div whose implementation is
 // independent from cqSeq and is considered immutable to the user,
 // however it can be changed programmatically by a cqWrap instance on a user-led
 // action.
-window.cqDiv = class {
+cqDiv = class {
     constructor(div) {
         this.div = div;
     } // end constructor
@@ -86,14 +89,16 @@ window.cqDiv = class {
 
 // A cqWrap instance represents both a cqDiv (visual) and a cqSeq (data);
 // and it adds user features such as char sequence mutation.
-window.cqWrap = class {
+cqWrap = class {
     constructor(seq, div) { this.wrapped = [seq, div]; }
     add(n) { this.wrapped.forEach((it) => it[this.add.name](n)); }
     has(n) { return this.wrapped[0].has(n); }
     empty() { this.wrapped.forEach((it) => it[this.empty.name]()); }
     last() { return this.wrapped[0].orderArr[this.wrapped[0].orderArr.length-1]; }
-    count() { return this.wrapped[0].orderArr.length; }
-    join(str) { return this.wrapped[0].orderArr.join(str); }
-    all() { return this.wrapped[0].orderArr; }
+    count() { return this.wrapped[0].count(); }
+    join(str) { return this.wrapped[0].join(str); }
+    all() { return this.wrapped[0].all(); }
     deleteAtPos(pos) { this.wrapped.forEach((it) => it[this.deleteAtPos.name](pos)); }
 }; // end cqWrap
+
+try{if (module != null) module.exports=cqSeq;}catch{}

@@ -1,0 +1,28 @@
+{
+  "name": "vischar",
+  "version": "0.0.0",
+  "description": "character visualizer",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/ftr_remove_all_chars/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koreyhinton/vischar.git"
+  },
+  "keywords": [
+    "character"
+  ],
+  "author": "Korey Hinton",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/koreyhinton/vischar/issues"
+  },
+  "homepage": "https://github.com/koreyhinton/vischar#readme",
+  "devDependencies": {
+    "csv-parse": "^5.4.0"
+  }
+}

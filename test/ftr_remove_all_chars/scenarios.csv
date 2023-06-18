@@ -1,0 +1,8 @@
+Scenario,Name,GIVEN text,AND the transform,WHEN I run THEN the text becomes
+1,Remove 1 char,With halting steps,replaces each g with,With haltin steps
+2,Remove 2 chars,With halting steps,"replaces each g,p",With haltin stes
+3,Remove 3 chars,With halting steps,"replaces each a,e,i",Wth hltng stps
+4,Remove 11 chars (just 2 spaces remain),With halting steps,"replaces each W,i,t,h,a,l,n,g,p,e,s",  
+5,Remove 7 (all) chars,halting,"replaces each h,a,l,t,i,n,g",
+6,Remove 1 unicode char,halt—ing,replaces each —,halting
+7,Remove all unicode chars,“With halt—ing steps”,"replaces each “,—,”",With halting steps
